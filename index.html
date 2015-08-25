@@ -18,24 +18,54 @@
 <div class="container">
     <div class="row" ng-controller="CalcCtrl">
         <div class="col-md-7 col-md-push-5 page-outputs m-b-md">
-            For each side you need:
-            <ul>
-                <li>2x 5 kg</li>
-                <li>1x 1 kg</li>
-            </ul>
+            <div ng-show="achievable">
+                To get {{totalWeight}} kg on your bar you need these plates on each side:
+                <ul>
+                    <li ng-repeat="plate in output | orderBy: -weight">{{plate.amount}}x {{plate.weight}} kg</li>
+                </ul>
+            </div>
+
+            <div ng-hide="achievable || unachievable || lowerThanSmallest">
+                <p>
+                    Enter weight and your available plates into the panel.
+                </p>
+            </div>
+
+            <div ng-show="unachievable">
+                <p>With your setup {{totalWeight}} kg is unachievable. Choose another one.</p>
+                The closest you can get is {{closestPossible}} kg:
+                <ul>
+                    <li ng-repeat="plate in output | orderBy: -weight">{{plate.amount}}x {{plate.weight}} kg</li>
+                </ul>
+            </div>
+
+            <div ng-show="lowerThanSmallest">
+                <p>Your lightest plate is heavier than your desired weight. Choose another one.</p>
+            </div>
         </div>
 
         <div class="col-md-4 col-md-pull-7 page-inputs">
 
             <div class="page-weight-input row text-center m-b">
-                <div class="col-md-6 col-md-offset-3">
+                <div class="col-md-6 col-md-offset-3 m-b">
                     <label for="weightInput">
-                        <h3>Weight</h3>
+                        <h3>Total weight</h3>
                     </label>
 
                     <div class="input-group">
                         <input type="number" name="weight" id="weightInput" min="0" class="form-control" aria-describedby="unit-descr" ng-model="totalWeight" ng-change="calculate()">
                         <span class="input-group-addon" id="unit-descr">kg</span>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-md-offset-3">
+                    <label for="barWeightInput">
+                        <h3>Bar weight</h3>
+                    </label>
+
+                    <div class="input-group">
+                        <input type="number" name="weight" id="barWeightInput" min="0" class="form-control" aria-describedby="bar-unit-descr" ng-model="barWeight" ng-change="calculate()">
+                        <span class="input-group-addon" id="bar-unit-descr">kg</span>
                     </div>
                 </div>
             </div>
@@ -70,6 +100,11 @@
                     </div>
                     <div class="col-xs-6">
                         <img src="assets/images/minus-sign.svg" alt="Add new" class="img-responsive" ng-click="removeLastPlate()">
+                    </div>
+
+                    <div class="col-xs-12 m-t text-center">
+                        <button class="btn btn-primary" ng-click="saveSettings()">Save</button>
+                        <button class="btn btn-primary" ng-click="loadSettings()">Load</button>
                     </div>
                 </div>
             </div>
