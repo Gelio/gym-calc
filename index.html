@@ -19,7 +19,7 @@
     <div class="row" ng-controller="CalcCtrl">
         <div class="col-md-7 col-md-push-5 page-outputs m-b-md">
             <div ng-show="achievable">
-                To get {{totalWeight}} kg on your bar you need these plates on each side:
+                To get {{totalWeight}} kg <span ng-show="barWeight">on your {{barWeight}} kg bar</span> you need these plates on each side:
                 <ul>
                     <li ng-repeat="plate in output | orderBy: -weight">{{plate.amount}}x {{plate.weight}} kg</li>
                 </ul>
@@ -119,6 +119,7 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.min.js"></script>
+<script src="assets/js/plate.js"></script>
 <script src="main.js"></script>
 </body>
 </html>

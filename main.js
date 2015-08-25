@@ -11,13 +11,10 @@
         $scope.plates = [];
         $scope.output = [];
 
-        $scope.newPlate = {
-            weight: 10,
-            amount: 2
-        };
+        $scope.newPlate = new Plate(10, 2);
 
         $scope.addNewPlate = function() {
-            $scope.plates.push(Object.create($scope.newPlate));
+            $scope.plates.push($scope.newPlate.clone());
         };
 
         for(var i=0; i < 2; ++i)
@@ -31,6 +28,7 @@
             // Everything is divided by 2 (weightLeft and plates amounts in a forEach) so that we only count per-side weight
             var platesSorted = [],
                 weightLeft = ($scope.totalWeight-$scope.barWeight)/2;
+            //console.log(weightLeft);
 
             $scope.output = [];
             $scope.achievable = false;
@@ -46,17 +44,20 @@
             }
 
             $scope.plates.forEach(function(value) {
-                platesSorted.push(jQuery.extend({}, value));
+                platesSorted.push(value.clone());
             });
 
+            //console.log("before sorting", platesSorted.map(function(plate) {return plate.weight;}));
             platesSorted = platesSorted.sort(function(a, b) {
-                if(a.weight < b.weight)
+                /*if(a.weight > b.weight)
                     return -1;
                 else if(a.weight == b.weight)
                     return 0;
                 else
-                    return 1;
+                    return 1;*/
+                return b.weight-a.weight;
             });
+            //console.log("after sorting", platesSorted.map(function(plate) {return plate.weight;}));
 
             for(var i=1; i < platesSorted.length; ++i) {
                 if(platesSorted[i].weight == platesSorted[i-1].weight) {
@@ -65,26 +66,24 @@
                     --i;
                 }
             }
+            //console.log(platesSorted);
 
             platesSorted.forEach(function(plate, index) {
                 var availablePlates = Math.floor(plate.amount/2),
-                    sideWeight = plate.weight / 2;
+                    sideWeight = plate.weight;
                 if(weightLeft >= sideWeight) {
                     var amount = Math.floor(weightLeft / sideWeight);
                     if(amount > availablePlates)
                         amount = availablePlates;
 
-                    weightLeft -= amount*plate.weight;
-                    $scope.output.push({
-                        weight: plate.weight,
-                        amount: amount
-                    });
+                    weightLeft -= amount*sideWeight;
+                    $scope.output.push(new Plate(plate.weight, amount));
                 }
             });
             if(weightLeft*2 == $scope.totalWeight) {
                 $scope.lowerThanSmallest = true;
             }
-            else if(weightLeft > 0) {
+            else if(weightLeft != 0) {
                 $scope.unachievable = true;
                 $scope.closestPossible = $scope.totalWeight-weightLeft*2;
             }
@@ -92,19 +91,29 @@
                 $scope.achievable = true;
             }
 
-            //console.log(platesSorted);
+            //console.log(weightLeft);
         };
 
         $scope.saveSettings = function() {
-            localStorage.setItem("plates", $scope.plates);
+            localStorage.setItem("plates", JSON.stringify($scope.plates));
+            /*console.log($scope.plates);
+            console.log(JSON.stringify($scope.plates));*/
+
             localStorage.setItem("bar", $scope.barWeight);
         };
 
         $scope.loadSettings = function() {
             var barWeight = localStorage.getItem("bar");
+
             if(barWeight !== undefined) {
                 $scope.barWeight = parseFloat(barWeight);
-                $scope.plates = localStorage.getItem("plates");
+
+                var parsedPlates = JSON.parse(localStorage.getItem("plates"));
+
+                $scope.plates = [];
+                parsedPlates.forEach(function(plate) {
+                    $scope.plates.push(new Plate(plate.weight, plate.amount));
+                });
             }
         }
     }]);
