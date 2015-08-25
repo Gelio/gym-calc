@@ -22,6 +22,7 @@
 
         $scope.removeLastPlate = function() {
             $scope.plates.splice($scope.plates.length-1, 1);
+            $scope.calculate();
         };
 
         $scope.calculate = function() {
@@ -111,6 +112,8 @@
                 parsedPlates.forEach(function(plate) {
                     $scope.plates.push(new Plate(plate.weight, plate.amount));
                 });
+
+                $scope.calculate();
             }
         }
     }]);

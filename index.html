@@ -21,7 +21,9 @@
             <div ng-show="achievable">
                 To get {{totalWeight}} kg <span ng-show="barWeight">on your {{barWeight}} kg bar</span> you need these plates on each side:
                 <ul>
-                    <li ng-repeat="plate in output | orderBy: -weight">{{plate.amount}}x {{plate.weight}} kg</li>
+                    <li ng-repeat="plate in output | orderBy: -weight">
+                        <span class="plate-output-amount">{{plate.amount}}</span>x <span class="plate-output-weight">{{plate.weight}}</span> kg
+                    </li>
                 </ul>
             </div>
 
@@ -35,7 +37,9 @@
                 <p>With your setup {{totalWeight}} kg is unachievable. Choose another one.</p>
                 The closest you can get is {{closestPossible}} kg:
                 <ul>
-                    <li ng-repeat="plate in output | orderBy: -weight">{{plate.amount}}x {{plate.weight}} kg</li>
+                    <li ng-repeat="plate in output | orderBy: -weight">
+                        <span class="plate-output-amount">{{plate.amount}}</span>x <span class="plate-output-weight">{{plate.weight}}</span> kg
+                    </li>
                 </ul>
             </div>
 
