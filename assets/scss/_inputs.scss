@@ -1,0 +1,32 @@
+.page-inputs {
+  background-color: #055E68;
+  padding: 10px;
+  box-shadow: 0 0 10px 2px #055E68;
+}
+
+.page-plates table.table {
+  th, td {
+    border-color: #62A388;
+  }
+}
+
+input.weight-input {
+  display: inline-block;
+  width: 80%;
+
+  @media (min-width: 62em) {
+    width: 50%;
+  }
+}
+
+span.weight-input-label {
+  margin-top: 5px;
+}
+
+.control-buttons {
+  width: 50%;
+
+  img {
+    cursor: pointer;
+  }
+}

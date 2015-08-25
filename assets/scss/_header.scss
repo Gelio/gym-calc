@@ -1,0 +1,18 @@
+.page-header {
+  display: flex;
+  align-items: center;
+
+  height: 150px;
+
+  background-color: #343434;
+  //color: #B9D2D2;
+
+  box-shadow: 0 0 20px 5px rgba(0, 0, 0, 1);
+
+  @media (min-width: 48em) {
+    height: 250px;
+    h1 {
+      font-size: 3.5rem;
+    }
+  }
+}

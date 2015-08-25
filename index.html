@@ -1,0 +1,89 @@
+<!doctype html>
+<html ng-app="gymCalc">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Gym weights calculator</title>
+
+    <link rel="stylesheet" href="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="container-fluid page-header m-b-md">
+    <div class="container text-center">
+        <h1>Gym Weights Calculator</h1>
+    </div>
+</header>
+
+<div class="container">
+    <div class="row" ng-controller="CalcCtrl">
+        <div class="col-md-7 col-md-push-5 page-outputs m-b-md">
+            For each side you need:
+            <ul>
+                <li>2x 5 kg</li>
+                <li>1x 1 kg</li>
+            </ul>
+        </div>
+
+        <div class="col-md-4 col-md-pull-7 page-inputs">
+
+            <div class="page-weight-input row text-center m-b">
+                <div class="col-md-6 col-md-offset-3">
+                    <label for="weightInput">
+                        <h3>Weight</h3>
+                    </label>
+
+                    <div class="input-group">
+                        <input type="number" name="weight" id="weightInput" min="0" class="form-control" aria-describedby="unit-descr" ng-model="totalWeight" ng-change="calculate()">
+                        <span class="input-group-addon" id="unit-descr">kg</span>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="page-plates">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Plate weight</th>
+                            <th>Amount</th>
+                        </tr>
+                    </thead>
+
+                    <tbody class="text-center">
+                        <tr ng-repeat="plate in plates">
+                            <td>
+                                <input type="number" min="0" class="form-control weight-input" ng-model="plate.weight" ng-change="calculate()">
+                                <span class="weight-input-label">kg</span>
+                            </td>
+
+                            <td>
+                                <input type="number" min="0" class="form-control weight-input" ng-model="plate.amount" ng-change="calculate()">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="control-buttons m-x-auto row">
+                    <div class="col-xs-6">
+                        <img src="assets/images/plus-sign.svg" alt="Add new" class="img-responsive" ng-click="addNewPlate()">
+                    </div>
+                    <div class="col-xs-6">
+                        <img src="assets/images/minus-sign.svg" alt="Add new" class="img-responsive" ng-click="removeLastPlate()">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<footer class="navbar navbar-fixed-bottom text-center m-t">
+    Created by <a href="http://voreny.bitbucket.org/" class="btn btn-secondary">Grzegorz Rozdzialik</a> Copyright @ 2015
+</footer>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.min.js"></script>
+<script src="main.js"></script>
+</body>
+</html>
