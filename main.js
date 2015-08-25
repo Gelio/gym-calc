@@ -47,7 +47,6 @@
                 platesSorted.push(value.clone());
             });
 
-            //console.log("before sorting", platesSorted.map(function(plate) {return plate.weight;}));
             platesSorted = platesSorted.sort(function(a, b) {
                 /*if(a.weight > b.weight)
                     return -1;
@@ -57,7 +56,6 @@
                     return 1;*/
                 return b.weight-a.weight;
             });
-            //console.log("after sorting", platesSorted.map(function(plate) {return plate.weight;}));
 
             for(var i=1; i < platesSorted.length; ++i) {
                 if(platesSorted[i].weight == platesSorted[i-1].weight) {
@@ -66,7 +64,6 @@
                     --i;
                 }
             }
-            //console.log(platesSorted);
 
             platesSorted.forEach(function(plate, index) {
                 var availablePlates = Math.floor(plate.amount/2),
@@ -105,7 +102,7 @@
         $scope.loadSettings = function() {
             var barWeight = localStorage.getItem("bar");
 
-            if(barWeight !== undefined) {
+            if(barWeight !== null) {
                 $scope.barWeight = parseFloat(barWeight);
 
                 var parsedPlates = JSON.parse(localStorage.getItem("plates"));
