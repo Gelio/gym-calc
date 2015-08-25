@@ -4,5 +4,4 @@ Input all the available plates that you have and let the calculator show you eve
 
 
 ## TODO ##
-* calc algorithm
-* data display
+done
